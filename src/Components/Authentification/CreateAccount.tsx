@@ -105,7 +105,7 @@ export default function CreateAccount() {
           <Grid item>
             <Link
               style={{ cursor: "pointer" }}
-              onClick={() => UseRoutes.move(UseRoutes.CREATEACCOUNT)}
+              onClick={() => UseRoutes.move(UseRoutes.LOGIN)}
               variant="body2"
             >
               {"Already have an account ? Sign Up"}
