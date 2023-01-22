@@ -5,9 +5,7 @@ const Home = () => {
   const token = UseLocalStorage.getToken();
   return (
     <div>
-      <p>
-        Home <span style={{ color: "red" }}>{token}</span>
-      </p>
+      <p>Home</p>
       <a href="" onClick={UseAuth.logout}>
         click here to logout
       </a>

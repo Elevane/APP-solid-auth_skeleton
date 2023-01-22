@@ -1,45 +1,45 @@
 import { toast } from "solid-toast";
-import UseLocalStorage from "./UseLocalStorage"
+import { CreateUserRequest, LoginUserRequest } from "../Models/User";
+import UseLocalStorage from "./UseLocalStorage";
 
+const request = async (method: string, url: string, body: Object) => {
+  try {
+    const token = UseLocalStorage.getToken();
+    const response = await fetch(import.meta.env.VITE_BASEURL + url, {
+      method: method,
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "*/*",
+        Authorization: token,
+      },
+      body: JSON.stringify(body),
+    });
 
-const request =  async (method, url, body) => {
-    try {
-        const token = UseLocalStorage.getToken()
-        const response =  await fetch(import.meta.env.VITE_BASEURL + url, {
-            method : method,
-            headers : {
-                "Content-Type": "application/json",
-                "Access-Control-Allow-Origin": "*",
-                Accept: "*/*",
-                Authorization: token,
-              },
-              body : JSON.stringify(body)
-        })
-    
-        const data = await handleError(response);
-        return data
-    } catch (error) {
-        //console.log(error);
-        toast.error(`Error while calling the api : ${error}`)
-        // Gérer l'erreur ici
-        // Par exemple, afficher un message d'erreur à l'utilisateur ou rediriger vers une page d'erreur
-    }
-}
+    const data = await handleError(response);
+    return data;
+  } catch (error) {
+    toast.error(`${error && error.message}`);
+  }
+};
 
-const handleError = (response) => {
-    console.log(response)
-    if (!response.ok) {
-        throw Error(response.statusText);
-    }
-    return response.json();
-}
+const handleError = async (response) => {
+  if (!response.ok) {
+    const errormessage = await response.json();
+    if (errormessage) throw Error(`${errormessage.errorMessage}`);
+  }
+  return response.json();
+};
 
-const api = "/api"
-const authapi = `${api}/auth`
+const api = "/api";
+const authapi = `${api}/auth`;
 
-const login = async (email, password) => {
-    return await request("POST", `${authapi}`, {email: email, password : password})
-}
+const register = async (user: CreateUserRequest) => {
+  return await request("POST", `${authapi}/register`, user);
+};
 
+const login = async (user: LoginUserRequest) => {
+  return await request("POST", `${authapi}/authenticate`, user);
+};
 
-export default {login}
+export default { login, register };

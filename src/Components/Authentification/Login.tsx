@@ -10,19 +10,25 @@ import {
   Icon,
 } from "@suid/material";
 import { createSignal } from "solid-js";
+import toast from "solid-toast";
 import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
+import UseLocalStorage from "../../Hooks/UseLocalStorage";
+import UseRoutes from "../../Hooks/UseRoutes";
+import { LoginUserRequest } from "../../Models/User";
 
 export default function Login() {
-  const [email, setEmail] = createSignal("");
-  const [password, setPassword] = createSignal("");
+  const [userLogin, setUserLogin] = createSignal<LoginUserRequest>(null);
   const [loading, setLoading] = createSignal(false);
 
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    var res = await UseApi.login(email(), password());
+    var res = await UseApi.login(userLogin());
     setLoading(false);
+    if (!res.result) return toast.error(`Could not login: ${res.error}`);
+    UseRoutes.move(UseRoutes.HOME);
+    UseLocalStorage.saveToken(res.result.token);
   };
 
   return (
@@ -51,7 +57,9 @@ export default function Login() {
           name="email"
           autoComplete="email"
           autoFocus
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) =>
+            setUserLogin({ ...userLogin(), Email: e.target.value })
+          }
         />
         <TextField
           margin="normal"
@@ -61,7 +69,9 @@ export default function Login() {
           label="Password"
           type="password"
           id="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) =>
+            setUserLogin({ ...userLogin(), Password: e.target.value })
+          }
           autoComplete="current-password"
         />
         <Button
@@ -80,7 +90,13 @@ export default function Login() {
         </Button>
         <Grid container>
           <Grid item>
-            <Link variant="body2">{"Don't have an account? Sign Up"}</Link>
+            <Link
+              style={{ cursor: "pointer" }}
+              onClick={() => UseRoutes.move(UseRoutes.CREATEACCOUNT)}
+              variant="body2"
+            >
+              {"Don't have an account? Sign Up"}
+            </Link>
           </Grid>
         </Grid>
       </Box>

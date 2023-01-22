@@ -1,28 +1,20 @@
-const saveToken = (item) => {
+const saveToken = (item: string): void => {
   localStorage.setItem(
     import.meta.env.VITE_TOKEN_KEY,
     btoa(JSON.stringify(item))
-  )
-}
-const getToken = () => {
-  var value = localStorage.getItem(import.meta.env.VITE_TOKEN_KEY)
-  return isOk(value)
-}
-const getItem = (key) => {
-  var value = localStorage.getItem(key)
-  console.log(value)
-  return isOk(value)
-}
+  );
+};
+const getToken = (): string => {
+  var value = localStorage.getItem(import.meta.env.VITE_TOKEN_KEY);
+  return value;
+};
+const getItem = (key: string): any => {
+  var value = localStorage.getItem(key);
+  return value;
+};
 
-const isOk = (value) => {
-  if (value === undefined || value == undefined) return null
-  if (value == "") return null
+const removeToken = (): void => {
+  localStorage.removeItem(import.meta.env.VITE_TOKEN_KEY);
+};
 
-  return value
-}
-
-const removeToken = () => {
-  localStorage.removeItem(import.meta.env.VITE_TOKEN_KEY)
-}
-
-export default { getItem, saveToken, getToken, removeToken }
+export default { getItem, saveToken, getToken, removeToken };
