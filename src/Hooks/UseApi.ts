@@ -42,4 +42,8 @@ const login = async (user: LoginUserRequest) => {
   return await request("POST", `${authapi}/authenticate`, user);
 };
 
-export default { login, register };
+const googleLogin = async (user: LoginUserRequest) => {
+  return await request("POST", `${authapi}/authenticate/google`, user);
+};
+
+export default { login, register, googleLogin };

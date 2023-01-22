@@ -21,6 +21,12 @@ export default function Login() {
   const [userLogin, setUserLogin] = createSignal<LoginUserRequest>(null);
   const [loading, setLoading] = createSignal(false);
 
+  window.handleCredentialResponse = async (e) => {
+    console.log(e);
+    setUserLogin({ ...userLogin(), GoogleToken: e.credentials });
+    var res = await UseApi.googleLogin(userLogin());
+  };
+
   const handleSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
@@ -76,11 +82,12 @@ export default function Login() {
         />
         <Button
           disabled={loading()}
-          type="submit"
+          type="button"
+          id="google_button"
           fullWidth
           class="button"
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 1, mb: 2 }}
         >
           {loading() ? (
             <Spinner radius="25" stroke="3" color="#fff" />
@@ -88,6 +95,34 @@ export default function Login() {
             "Sign in"
           )}
         </Button>
+
+        {loading() ? (
+          <Spinner radius="25" stroke="3" color="#fff" />
+        ) : (
+          <div style={{ "margin-bottom": "20px" }}>
+            <div
+              id="g_id_onload"
+              data-client_id="411969903757-sad99o9ihsosiqfb4c719b2lgefsrq25.apps.googleusercontent.com"
+              data-context="signin"
+              data-ux_mode="popup"
+              data-callback="handleCredentialResponse"
+              data-auto_prompt="false"
+            ></div>
+
+            <div
+              class="g_id_signin"
+              data-type="standard"
+              data-shape="rectangular"
+              data-theme="outline"
+              data-text="signin_with"
+              data-size="large"
+              data-logo_alignment="left"
+              data-scope="https://www.googleapis.com/auth/plus.login   
+      https://www.googleapis.com/auth/userinfo.email"
+            ></div>
+          </div>
+        )}
+
         <Grid container>
           <Grid item>
             <Link

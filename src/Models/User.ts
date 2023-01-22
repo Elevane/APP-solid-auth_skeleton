@@ -7,4 +7,6 @@ export interface CreateUserRequest extends User {
   Username: string;
 }
 
-export interface LoginUserRequest extends User {}
+export interface LoginUserRequest extends User {
+  GoogleToken: string;
+}
