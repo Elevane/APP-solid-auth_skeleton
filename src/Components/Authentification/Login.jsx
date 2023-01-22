@@ -1,7 +1,8 @@
-import { Box, Avatar, Typography, TextField, Link, Grid, Button } from "@suid/material"
+import { FaceOutlined } from "@suid/icons-material";
+import { Box, Avatar, Typography, TextField, Link, Grid, Button, Icon } from "@suid/material"
 import { createSignal } from "solid-js"
 import Spinner from 'solidjs-material-spinner';
-
+import UseApi from "../../Hooks/UseApi";
 
 export default function Login() {
   const [email, setEmail] = createSignal("")
@@ -9,23 +10,17 @@ export default function Login() {
   const [loading, setLoading] = createSignal(false)
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     setLoading(true)
     e.preventDefault();
+    var res = await UseApi.login(email(), password())
+    console.log(res)
   }
-  
+
   return (
-    <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            
-            alignItems: 'center',
-          }}
-        >
+    <Box >
           <Avatar sx={{ m: 1, bgcolor: 'primary.mainz' }}>
-           
+           <Icon><FaceOutlined></FaceOutlined></Icon>
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -54,8 +49,10 @@ export default function Login() {
               autoComplete="current-password"
             />
             <Button
+            disabled={loading()}
               type="submit"
               fullWidth
+              class="button"
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
