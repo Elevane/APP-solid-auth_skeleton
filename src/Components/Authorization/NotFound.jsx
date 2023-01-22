@@ -1,10 +1,9 @@
-import { Navigate } from "@solidjs/router";
+import UseRoutes  from "../../Hooks/UseRoutes"
 
 export default function NotFound() {
   return (
-    <>
+    <div>
       <p>Not Found</p>
-      <a href="/login">click here to login</a>
-    </>
-  );
+    </div>
+  )
 }
