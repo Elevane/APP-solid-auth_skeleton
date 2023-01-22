@@ -4,7 +4,10 @@ const move = (route) => {
 }
 
 
-let LOGIN = "login"
-let HOME = ""
+const LOGIN = "login"
+const HOME = ""
+const CREATEACCOUNT = "createAccount"
 
-export default { move, LOGIN, HOME }
+
+
+export default { move, LOGIN, HOME, CREATEACCOUNT }

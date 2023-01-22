@@ -1,4 +1,5 @@
 import { Routes, Route, Router } from "@solidjs/router"
+import CreateAccount from "./Components/Authentification/CreateAccount"
 import Login from "./Components/Authentification/Login"
 import NotFound from "./Components/Authorization/NotFound"
 import ProtectedRoute from "./Components/Authorization/ProtectedRoute"
@@ -17,6 +18,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/createAccount" element={<CreateAccount />} />
         <Route path="/*all" element={<NotFound />} />
       </Routes>
     </Router>

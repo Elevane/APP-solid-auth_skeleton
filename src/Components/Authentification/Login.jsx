@@ -1,24 +1,74 @@
+import { Box, Avatar, Typography, TextField, Link, Grid, Button } from "@suid/material"
 import { createSignal } from "solid-js"
-import UseLocalStorage from "../../Hooks/UseLocalStorage"
-import UseRoutes from "../../Hooks/UseRoutes"
+import Spinner from 'solidjs-material-spinner';
+
 
 export default function Login() {
-  const [userName, setrUserName] = createSignal("")
+  const [email, setEmail] = createSignal("")
   const [password, setPassword] = createSignal("")
+  const [loading, setLoading] = createSignal(false)
+
+
+  const handleSubmit = (e) => {
+    setLoading(true)
+    e.preventDefault();
+  }
+  
   return (
-    <>
-      <h1>login</h1>
-      <div>
-        <input onchange={() => setrUserName(e.target.value)} type="text"></input>
-        <input onchange={() => setPassword(e.target.value)} type="password"></input>
-        <input
-          onClick={() => {
-            UseLocalStorage.saveToken("qzdqzdqzdqzd46q8z4d86qz1dqz")
-            UseRoutes.move(UseRoutes.HOME)
+    <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            
+            alignItems: 'center',
           }}
-          type="submit"
-        ></input>
-      </div>
-    </>
+        >
+          <Avatar sx={{ m: 1, bgcolor: 'primary.mainz' }}>
+           
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <Box style={{width : '400px'}} component="form" onSubmit={(e) => handleSubmit(e)} noValidate sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              { loading() ? <Spinner radius="25" stroke="3" color="#fff"/> : "Sign in"}
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link variant="body2">
+                  {"Don't have an account? Sign Up"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
   )
 }
