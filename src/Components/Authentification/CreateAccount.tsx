@@ -16,6 +16,7 @@ import UseApi from "../../Hooks/UseApi";
 import UseLocalStorage from "../../Hooks/UseLocalStorage";
 import UseRoutes from "../../Hooks/UseRoutes";
 import { CreateUserRequest } from "../../Models/User";
+import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function CreateAccount() {
   const [userCreate, setUserCreate] = createSignal<CreateUserRequest>(null);
@@ -98,7 +99,7 @@ export default function CreateAccount() {
           {loading() ? (
             <Spinner radius="25" stroke="3" color="#fff" />
           ) : (
-            "Sign up"
+            <GoogleLoginButton loading={loading()} />
           )}
         </Button>
         <Grid container>
