@@ -1,6 +1,14 @@
 import { toast } from "solid-toast";
-import { CreateUserRequest, LoginUserRequest } from "../Models/User";
+import {
+  AuthenticatedUser,
+  CreateUserRequest,
+  GoogleLoginUserRequest,
+  LoginUserRequest,
+} from "../Models/User";
 import UseLocalStorage from "./UseLocalStorage";
+import jwtDecode from "jwt-decode";
+import { GoogleOAuthResponse } from "../Models/GoogleOAuthResponse";
+import { ApiResult } from "../Models/ApiResult";
 
 const request = async (method: string, url: string, body: Object) => {
   try {
@@ -38,11 +46,22 @@ const register = async (user: CreateUserRequest) => {
   return await request("POST", `${authapi}/register`, user);
 };
 
-const login = async (user: LoginUserRequest) => {
+const login = async (
+  user: LoginUserRequest
+): Promise<ApiResult<AuthenticatedUser>> => {
   return await request("POST", `${authapi}/authenticate`, user);
 };
 
-const googleLogin = async (user: LoginUserRequest) => {
+const googleLogin = async (
+  token: string
+): Promise<ApiResult<AuthenticatedUser>> => {
+  const data: GoogleOAuthResponse = jwtDecode(token);
+  console.log(data);
+  const user: GoogleLoginUserRequest = {
+    Email: data.email,
+    GoogleToken: data.sub,
+    Username: data.name,
+  };
   return await request("POST", `${authapi}/authenticate/google`, user);
 };
 
