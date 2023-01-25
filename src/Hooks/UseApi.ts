@@ -56,7 +56,6 @@ const googleLogin = async (
   token: string
 ): Promise<ApiResult<AuthenticatedUser>> => {
   const data: GoogleOAuthResponse = jwtDecode(token);
-  console.log(data);
   const user: GoogleLoginUserRequest = {
     Email: data.email,
     GoogleToken: data.sub,

@@ -15,14 +15,15 @@ import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
 import UseLocalStorage from "../../Hooks/UseLocalStorage";
 import UseRoutes from "../../Hooks/UseRoutes";
-import { CreateUserRequest } from "../../Models/User";
+import { ApiResult } from "../../Models/ApiResult";
+import { AuthenticatedUser, CreateUserRequest } from "../../Models/User";
 import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function CreateAccount() {
   const [userCreate, setUserCreate] = createSignal<CreateUserRequest>(null);
   const [loading, setLoading] = createSignal(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: Event) => {
     setLoading(true);
     e.preventDefault();
     var res = await UseApi.register(userCreate());
@@ -91,17 +92,19 @@ export default function CreateAccount() {
         <Button
           disabled={loading()}
           type="submit"
+          id="google_button"
           fullWidth
           class="button"
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{ mt: 1, mb: 2 }}
         >
           {loading() ? (
             <Spinner radius="25" stroke="3" color="#fff" />
           ) : (
-            <GoogleLoginButton loading={loading()} />
+            "Sign up"
           )}
         </Button>
+        <GoogleLoginButton />
         <Grid container>
           <Grid item>
             <Link

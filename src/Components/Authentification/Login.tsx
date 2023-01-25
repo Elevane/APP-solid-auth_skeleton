@@ -6,10 +6,10 @@ import {
   TextField,
   Link,
   Grid,
-  Button,
   Icon,
+  Button,
 } from "@suid/material";
-import { createSignal } from "solid-js";
+import { createEffect, createSignal } from "solid-js";
 import toast from "solid-toast";
 import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
@@ -21,17 +21,18 @@ import GoogleLoginButton from "./GoogleLoginButton";
 
 export default function Login() {
   const [userLogin, setUserLogin] = createSignal<LoginUserRequest>(null);
-  const [loading, setLoading] = createSignal(false);
+  const [loading, setLoading] = createSignal<boolean>(false);
 
-  const handleSubmit = async (e) => {
-    console.log("qdqz");
+  const handleSubmit = async (e: Event): Promise<void> => {
     setLoading(true);
     e.preventDefault();
-    var res = await UseApi.login(userLogin());
+    const res: ApiResult<AuthenticatedUser> = await UseApi.login(userLogin());
     setLoading(false);
-    if (!res.result) return toast.error(`Could not login: ${res.ErrorMessage}`);
-    UseRoutes.move(UseRoutes.HOME);
-    UseLocalStorage.saveToken(res.result.Token);
+    if (!res.result) toast.error(`Could not login: ${res.ErrorMessage}`);
+    else {
+      UseRoutes.move(UseRoutes.HOME);
+      UseLocalStorage.saveToken(res.result.Token);
+    }
   };
 
   return (
@@ -44,6 +45,7 @@ export default function Login() {
       <Typography component="h1" variant="h5">
         Sign in
       </Typography>
+
       <Box
         style={{ width: "400px" }}
         component="form"
@@ -64,6 +66,7 @@ export default function Login() {
             setUserLogin({ ...userLogin(), Email: e.target.value })
           }
         />
+
         <TextField
           margin="normal"
           required
@@ -79,7 +82,7 @@ export default function Login() {
         />
         <Button
           disabled={loading()}
-          type="button"
+          type="submit"
           id="google_button"
           fullWidth
           class="button"
@@ -92,12 +95,7 @@ export default function Login() {
             "Sign in"
           )}
         </Button>
-
-        {loading() ? (
-          <Spinner radius="25" stroke="3" color="#fff" />
-        ) : (
-          <GoogleLoginButton />
-        )}
+        <GoogleLoginButton></GoogleLoginButton>
 
         <Grid container>
           <Grid item>
