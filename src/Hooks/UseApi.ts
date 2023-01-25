@@ -42,7 +42,9 @@ const handleError = async (response) => {
 const api = "/api";
 const authapi = `${api}/auth`;
 
-const register = async (user: CreateUserRequest) => {
+const register = async (
+  user: CreateUserRequest
+): Promise<ApiResult<AuthenticatedUser>> => {
   return await request("POST", `${authapi}/register`, user);
 };
 

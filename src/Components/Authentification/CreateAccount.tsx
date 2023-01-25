@@ -23,14 +23,18 @@ export default function CreateAccount() {
   const [userCreate, setUserCreate] = createSignal<CreateUserRequest>(null);
   const [loading, setLoading] = createSignal(false);
 
-  const handleSubmit = async (e: Event) => {
+  const handleSubmit = async (e: Event): Promise<void> => {
     setLoading(true);
     e.preventDefault();
-    var res = await UseApi.register(userCreate());
+    const res: ApiResult<AuthenticatedUser> = await UseApi.register(
+      userCreate()
+    );
     setLoading(false);
-    if (!res.result) return toast.error("Could not register");
-    UseRoutes.move(UseRoutes.HOME);
-    UseLocalStorage.saveToken(res.result.token);
+    if (!res.result) toast.error("Could not register");
+    else {
+      UseRoutes.move(UseRoutes.HOME);
+      UseLocalStorage.saveToken(res.result.Token);
+    }
   };
   return (
     <Box>

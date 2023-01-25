@@ -9,7 +9,7 @@ import {
   Icon,
   Button,
 } from "@suid/material";
-import { createEffect, createSignal } from "solid-js";
+import { createSignal } from "solid-js";
 import toast from "solid-toast";
 import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
