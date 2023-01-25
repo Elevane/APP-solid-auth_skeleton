@@ -1,5 +1,12 @@
 ##TODO :
 
-- Error app scope viable
-- auth google
-- fallback en cas de 401 du server
+typage :
+home
+global
+useapi,
+useauth
+use localstorage
+useroutes
+modeks
+app
+index
