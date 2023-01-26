@@ -1,10 +1,9 @@
 import UseLocalStorage from "./UseLocalStorage";
 import UseRoutes from "./UseRoutes";
 
+const logout = (): void => {
+  UseLocalStorage.removeToken();
+  UseRoutes.move(UseRoutes.LOGIN);
+};
 
-const logout = () =>  {
-    UseLocalStorage.removeToken()
-    UseRoutes.move(UseRoutes.LOGIN)
-}
-
-export default {logout}
+export default { logout };

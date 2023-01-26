@@ -1,7 +1,8 @@
+import { Component } from "solid-js";
 import UseAuth from "../Hooks/UseAuth";
 import UseLocalStorage from "../Hooks/UseLocalStorage";
 
-const Home = () => {
+const Home: Component = () => {
   const token = UseLocalStorage.getToken();
   return (
     <div>

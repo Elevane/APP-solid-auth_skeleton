@@ -1,9 +1,10 @@
 import { Navigate } from "@solidjs/router";
-import { Component } from "solid-js";
+import { Component, JSXElement } from "solid-js";
 import UseLocalStorage from "../../Hooks/UseLocalStorage";
 interface Props {
-  children: Element;
+  children: JSXElement;
 }
+
 const ProtectedRoute: Component<Props> = ({ children }) => {
   const token = UseLocalStorage.getToken();
   if (token == null) return <Navigate href={"/login"}></Navigate>;

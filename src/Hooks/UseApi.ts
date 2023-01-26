@@ -12,8 +12,8 @@ import { ApiResult } from "../Models/ApiResult";
 
 const request = async (method: string, url: string, body: Object) => {
   try {
-    const token = UseLocalStorage.getToken();
-    const response = await fetch(import.meta.env.VITE_BASEURL + url, {
+    const token: string = UseLocalStorage.getToken();
+    const response: Response = await fetch(import.meta.env.VITE_BASEURL + url, {
       method: method,
       headers: {
         "Content-Type": "application/json",
@@ -24,14 +24,14 @@ const request = async (method: string, url: string, body: Object) => {
       body: JSON.stringify(body),
     });
 
-    const data = await handleError(response);
+    const data: any = await handleError(response);
     return data;
-  } catch (error) {
+  } catch (error: any) {
     toast.error(`${error && error.message}`);
   }
 };
 
-const handleError = async (response) => {
+const handleError: any = async (response) => {
   if (!response.ok) {
     const errormessage = await response.json();
     if (errormessage) throw Error(`${errormessage.errorMessage}`);

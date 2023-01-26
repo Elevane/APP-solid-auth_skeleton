@@ -9,7 +9,7 @@ import {
   Icon,
   Button,
 } from "@suid/material";
-import { createSignal } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import toast from "solid-toast";
 import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
@@ -19,7 +19,7 @@ import { ApiResult } from "../../Models/ApiResult";
 import { AuthenticatedUser, LoginUserRequest } from "../../Models/User";
 import GoogleLoginButton from "./GoogleLoginButton";
 
-export default function Login() {
+const Login: Component = () => {
   const [userLogin, setUserLogin] = createSignal<LoginUserRequest>(null);
   const [loading, setLoading] = createSignal<boolean>(false);
 
@@ -111,4 +111,6 @@ export default function Login() {
       </Box>
     </Box>
   );
-}
+};
+
+export default Login;

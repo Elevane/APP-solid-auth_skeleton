@@ -9,7 +9,7 @@ import {
   Button,
   Icon,
 } from "@suid/material";
-import { createSignal } from "solid-js";
+import { Component, createSignal } from "solid-js";
 import toast from "solid-toast";
 import Spinner from "solidjs-material-spinner";
 import UseApi from "../../Hooks/UseApi";
@@ -19,7 +19,7 @@ import { ApiResult } from "../../Models/ApiResult";
 import { AuthenticatedUser, CreateUserRequest } from "../../Models/User";
 import GoogleLoginButton from "./GoogleLoginButton";
 
-export default function CreateAccount() {
+const CreateAccount: Component = () => {
   const [userCreate, setUserCreate] = createSignal<CreateUserRequest>(null);
   const [loading, setLoading] = createSignal(false);
 
@@ -123,4 +123,6 @@ export default function CreateAccount() {
       </Box>
     </Box>
   );
-}
+};
+
+export default CreateAccount;

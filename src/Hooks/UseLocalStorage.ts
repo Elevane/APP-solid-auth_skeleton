@@ -5,11 +5,11 @@ const saveToken = (item: string): void => {
   );
 };
 const getToken = (): string => {
-  var value = localStorage.getItem(import.meta.env.VITE_TOKEN_KEY);
+  const value: string = localStorage.getItem(import.meta.env.VITE_TOKEN_KEY);
   return value;
 };
 const getItem = (key: string): any => {
-  var value = localStorage.getItem(key);
+  const value: string = localStorage.getItem(key);
   return value;
 };
 
